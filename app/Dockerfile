@@ -10,8 +10,6 @@ COPY . .
 
 EXPOSE 3002
 
-# Define environment variable
 ENV VITE_REACT_APP_API_URL=http://localhost:3000
 
-# Run app.js when the container launches
 CMD ["yarn", "dev"]
