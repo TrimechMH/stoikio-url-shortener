@@ -1,28 +1,21 @@
-# URL Shortener boilerplate
+# URL Shortener Boilerplate
 
-## Getting started
+## Running with Docker Compose
 
-Install dependencies:
+### Build and Launch Applications:
+
+To start the URL Shortener services, run the following command:
 
 ```bash
-npm i
+docker-compose up -d
 ```
 
-Run the app:
+#### You can then test the API using Swagger [url-shorten apis](http://localhost:3000/api)
+
+#### To test the React app, navigate to [url-shorten front](http://localhost:3002)
+
+### Close apps
 
 ```bash
-npm run dev -w app
-```
-
-Run the api:
-
-```bash
-npm run dev -w api
-```
-
-The app and api restart on code change.
-
-Format code:
-```bash
-npm run format
+docker-compose down
 ```

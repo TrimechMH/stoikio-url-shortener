@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  react-app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - node-app
+
+  node-app:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/url_shortener
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
