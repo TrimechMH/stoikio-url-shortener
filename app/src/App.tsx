@@ -1,12 +1,16 @@
-// API is available at import.meta.env.VITE_API_URL
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import StatsPage from "./pages/StatsPage";
+import HomePage from "./pages/homePage";
 
 function App() {
   return (
-    <main>
-      <h1>URL shortener</h1>
-      <input />
-      <button>Shorten</button>
-    </main>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/stats/:shortUrl" element={<StatsPage />} />
+      </Routes>
+    </Router>
   );
 }
 
