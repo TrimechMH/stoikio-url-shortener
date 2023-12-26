@@ -3,7 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UrlShortenSchema } from './infrastructure/database/mongoose/url-shorten.model';
 import { UrlShortenController } from './infrastructure/web/api/url-shorten.controller';
 import { MongooseUrlShortenRepository } from './infrastructure/database/mongoose/url-shorten.repository';
-import { UrlShortenUseCase } from './domain/usecases/url-shorten.use-case';
+import { GenerateUrlShortenUseCase } from './domain/usecases/generate-url-shorten.use-case';
+import {
+  GetOriginalUrlAndIncrementCountingUseCase
+} from './domain/usecases/get-original-url-and-increment-counting.use-case';
+import { GetShortenUrlUseCase } from './domain/usecases/get-shorten-url.use-case';
 
 @Module({
   imports: [
@@ -13,7 +17,7 @@ import { UrlShortenUseCase } from './domain/usecases/url-shorten.use-case';
     ]),
   ],
   controllers: [UrlShortenController],
-  providers: [MongooseUrlShortenRepository, UrlShortenUseCase],
-  exports: [MongooseUrlShortenRepository, UrlShortenUseCase],
+  providers: [MongooseUrlShortenRepository, GenerateUrlShortenUseCase, GetOriginalUrlAndIncrementCountingUseCase, GetShortenUrlUseCase],
+  exports: [MongooseUrlShortenRepository, GenerateUrlShortenUseCase, GetOriginalUrlAndIncrementCountingUseCase, GetShortenUrlUseCase],
 })
 export class ShortenModule {}

@@ -9,13 +9,21 @@ import {
   NotFoundException,
   Header,
 } from '@nestjs/common';
-import { UrlShortenUseCase } from '../../../domain/usecases/url-shorten.use-case';
 import { UrlShortenDto } from '../../../application/url-shorten.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { GenerateUrlShortenUseCase } from '../../../domain/usecases/generate-url-shorten.use-case';
+import {
+  GetOriginalUrlAndIncrementCountingUseCase
+} from '../../../domain/usecases/get-original-url-and-increment-counting.use-case';
+import { GetShortenUrlUseCase } from '../../../domain/usecases/get-shorten-url.use-case';
 
 @Controller()
 export class UrlShortenController {
-  constructor(private readonly urlShortenUseCase: UrlShortenUseCase) {}
+  constructor(
+      private readonly generateUrlShortenUseCase: GenerateUrlShortenUseCase,
+      private readonly getOriginalUrlAndIncrementCountingUseCase: GetOriginalUrlAndIncrementCountingUseCase,
+      private readonly getShortenUrlUseCase: GetShortenUrlUseCase
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a shorten url' })
@@ -25,7 +33,7 @@ export class UrlShortenController {
   })
   @ApiBody({ type: UrlShortenDto })
   async shortenUrl(@Body() shortenUrlDto: UrlShortenDto) {
-    const shortenedUrl = await this.urlShortenUseCase.generateShortenUrl(
+    const shortenedUrl = await this.generateUrlShortenUseCase.generateShortenUrl(
       shortenUrlDto,
     );
     return { shortUrl: shortenedUrl.shortUrl };
@@ -40,7 +48,7 @@ export class UrlShortenController {
   @Header('Cache-Control', 'no-store')
   async getUrl(@Param('shortUrl') shortUrl: string, @Res() res) {
     const urlShorten =
-      await this.urlShortenUseCase.incrementCountingAndRetrieveOriginalUrl(
+      await this.getOriginalUrlAndIncrementCountingUseCase.incrementCountingAndRetrieveOriginalUrl(
         shortUrl,
       );
     if (!urlShorten) {
@@ -56,7 +64,7 @@ export class UrlShortenController {
     description: 'Get shorten url statistics information',
   })
   async getStatisticsUrl(@Param('shortUrl') shortUrl: string) {
-    const urlShorten = await this.urlShortenUseCase.getShortenUrl(shortUrl);
+    const urlShorten = await this.getShortenUrlUseCase.getShortenUrl(shortUrl);
     if (!urlShorten) {
       throw new NotFoundException('URL not found: can be expired');
     }
