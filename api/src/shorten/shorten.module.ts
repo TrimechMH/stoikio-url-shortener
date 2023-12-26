@@ -17,7 +17,6 @@ import { GetShortenUrlUseCase } from './domain/usecases/get-shorten-url.use-case
     ]),
   ],
   controllers: [UrlShortenController],
-  providers: [MongooseUrlShortenRepository, GenerateUrlShortenUseCase, GetOriginalUrlAndIncrementCountingUseCase, GetShortenUrlUseCase],
-  exports: [MongooseUrlShortenRepository, GenerateUrlShortenUseCase, GetOriginalUrlAndIncrementCountingUseCase, GetShortenUrlUseCase],
+  providers: [MongooseUrlShortenRepository, GenerateUrlShortenUseCase, GetOriginalUrlAndIncrementCountingUseCase, GetShortenUrlUseCase]
 })
 export class ShortenModule {}
