@@ -5,11 +5,11 @@ import { GetShortenUrlService } from '../../application/get-shorten-url.service'
 
 @Injectable()
 export class GetShortenUrlUseCase implements GetShortenUrlService {
-    constructor(
-        private readonly urlShortenRepository: MongooseUrlShortenRepository,
-    ) {}
+  constructor(
+    private readonly urlShortenRepository: MongooseUrlShortenRepository,
+  ) {}
 
-    async getShortenUrl(shortUrl: string): Promise<UrlShorten | null> {
-        return await this.urlShortenRepository.findByShortUrl(shortUrl);
-    }
+  async getShortenUrl(shortUrl: string): Promise<UrlShorten | null> {
+    return await this.urlShortenRepository.findByShortUrl(shortUrl);
+  }
 }

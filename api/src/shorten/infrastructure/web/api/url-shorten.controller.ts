@@ -12,17 +12,15 @@ import {
 import { UrlShortenDto } from '../../../application/url-shorten.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GenerateUrlShortenUseCase } from '../../../domain/usecases/generate-url-shorten.use-case';
-import {
-  GetOriginalUrlAndIncrementCountingUseCase
-} from '../../../domain/usecases/get-original-url-and-increment-counting.use-case';
+import { GetOriginalUrlAndIncrementCountingUseCase } from '../../../domain/usecases/get-original-url-and-increment-counting.use-case';
 import { GetShortenUrlUseCase } from '../../../domain/usecases/get-shorten-url.use-case';
 
 @Controller()
 export class UrlShortenController {
   constructor(
-      private readonly generateUrlShortenUseCase: GenerateUrlShortenUseCase,
-      private readonly getOriginalUrlAndIncrementCountingUseCase: GetOriginalUrlAndIncrementCountingUseCase,
-      private readonly getShortenUrlUseCase: GetShortenUrlUseCase
+    private readonly generateUrlShortenUseCase: GenerateUrlShortenUseCase,
+    private readonly getOriginalUrlAndIncrementCountingUseCase: GetOriginalUrlAndIncrementCountingUseCase,
+    private readonly getShortenUrlUseCase: GetShortenUrlUseCase,
   ) {}
 
   @Post()
@@ -33,9 +31,8 @@ export class UrlShortenController {
   })
   @ApiBody({ type: UrlShortenDto })
   async shortenUrl(@Body() shortenUrlDto: UrlShortenDto) {
-    const shortenedUrl = await this.generateUrlShortenUseCase.generateShortenUrl(
-      shortenUrlDto,
-    );
+    const shortenedUrl =
+      await this.generateUrlShortenUseCase.generateShortenUrl(shortenUrlDto);
     return { shortUrl: shortenedUrl.shortUrl };
   }
 

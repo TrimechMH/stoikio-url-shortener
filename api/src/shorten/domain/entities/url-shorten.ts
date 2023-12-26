@@ -1,6 +1,3 @@
 export class UrlShorten {
-  constructor(
-    public originalUrl: string,
-    public shortUrl: string,
-  ) {}
+  constructor(public originalUrl: string, public shortUrl: string) {}
 }
